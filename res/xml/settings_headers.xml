@@ -244,6 +244,17 @@
         android:icon="@drawable/ic_settings_advanced"
         android:title="@string/advanced_options_settings_title" />
 
+    <!-- SuperSU -->
+    <header
+        android:id="@+id/supersu_settings"
+        android:icon="@drawable/ic_settings_supersu"
+        android:title="@string/supersu_title">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="eu.chainfire.supersu"
+            android:targetClass="eu.chainfire.supersu.MainActivity" />
+    </header>
+
     <!-- About Device -->
     <header
         android:id="@+id/about_settings"
