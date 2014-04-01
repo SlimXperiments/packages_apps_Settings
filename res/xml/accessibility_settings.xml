@@ -66,12 +66,27 @@
                 android:fragment="com.android.settings.tts.TextToSpeechSettings"
                 android:title="@string/tts_settings_title"/>
 
-        <ListPreference android:key="select_long_press_timeout_preference"
-                android:title="@string/accessibility_long_press_timeout_preference_title"
-                android:entries="@array/long_press_timeout_selector_titles"
-                android:entryValues="@array/long_press_timeout_selector_values"
-                android:persistent="false"/>
+        <com.android.settings.widget.SeekBarPreference
+                android:key="select_long_press_timeout_preference"
+                android:title="@string/accessibility_long_press_timeout_preference_title" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/recent_panel_category" />
+
+        <CheckBoxPreference
+                android:key="recent_panel_lefty_mode"
+                android:title="@string/recent_panel_lefty_mode_title"
+                android:summary="@string/recent_panel_lefty_mode_summary"
+                android:persistent="false" />
+
+        <ListPreference
+                android:key="recent_panel_scale"
+                android:entries="@array/recent_panel_scale_entries"
+                android:entryValues="@array/recent_panel_scale_values"
+                android:title="@string/recent_panel_scale_title"
+                android:summary="@string/recent_panel_scale_summary"
+                android:persistent="false" />
 
 </PreferenceScreen>

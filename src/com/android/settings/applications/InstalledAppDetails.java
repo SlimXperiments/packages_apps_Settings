@@ -567,6 +567,10 @@ public class InstalledAppDetails extends Fragment
         // Set application name.
         TextView label = (TextView) appSnippet.findViewById(R.id.app_name);
         label.setText(mAppEntry.label);
+        // Set application package name.
+        TextView packageName = (TextView) appSnippet.findViewById(R.id.app_pkgname);
+        packageName.setText(mAppEntry.info.packageName);
+        packageName.setVisibility(View.VISIBLE);
         // Version number of application
         mAppVersion = (TextView) appSnippet.findViewById(R.id.app_size);
 
@@ -1410,11 +1414,10 @@ public class InstalledAppDetails extends Fragment
             refreshButtons();
             mPm.movePackage(mAppEntry.info.packageName, mPackageMoveObserver, moveFlags);
         } else if (v == mAppOpsButton) {
-            Bundle args = new Bundle();
-            args.putString(AppOpsDetails.ARG_PACKAGE_NAME, mAppEntry.info.packageName);
-            PreferenceActivity pa = (PreferenceActivity) getActivity();
-            pa.startPreferencePanel(AppOpsDetails.class.getName(), args,
-                    R.string.app_ops_settings, null, this, 2);
+            Intent intent = new Intent(
+                    android.provider.Settings.ACTION_APP_OPS_DETAILS_SETTINGS,
+                    Uri.parse("package:" + mAppEntry.info.packageName));
+            startActivity(intent);
         }
     }
 

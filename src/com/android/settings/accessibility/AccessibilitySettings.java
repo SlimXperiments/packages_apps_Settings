@@ -43,6 +43,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.TextUtils.SimpleStringSplitter;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
@@ -56,8 +57,8 @@ import com.android.settings.DialogCreatable;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.widget.SeekBarPreference;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,10 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             "captioning_preference_screen";
     private static final String DISPLAY_MAGNIFICATION_PREFERENCE_SCREEN =
             "screen_magnification_preference_screen";
+    private static final String RECENT_PANEL_LEFTY_MODE =
+            "recent_panel_lefty_mode";
+    private static final String RECENT_PANEL_SCALE =
+            "recent_panel_scale";
 
     // Extras passed to sub-fragments.
     static final String EXTRA_PREFERENCE_KEY = "preference_key";
@@ -119,6 +124,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     // presentation.
     private static final long DELAY_UPDATE_SERVICES_MILLIS = 1000;
 
+    // Default longpress duration
+    private static final int LONGPRESS_TIME_DEFAULT = 500;
+
     // Dialog IDs.
     private static final int DIALOG_ID_NO_ACCESSIBILITY_SERVICES = 1;
 
@@ -127,9 +135,6 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             new SimpleStringSplitter(ENABLED_ACCESSIBILITY_SERVICES_SEPARATOR);
 
     static final Set<ComponentName> sInstalledServices = new HashSet<ComponentName>();
-
-    private final Map<String, String> mLongPressTimeoutValuetoTitleMap =
-            new HashMap<String, String>();
 
     private final Configuration mCurConfig = new Configuration();
 
@@ -193,13 +198,13 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mTogglePowerButtonEndsCallPreference;
     private CheckBoxPreference mToggleLockScreenRotationPreference;
     private CheckBoxPreference mToggleSpeakPasswordPreference;
-    private ListPreference mSelectLongPressTimeoutPreference;
+    private SeekBarPreference mSelectLongPressTimeoutPreference;
     private Preference mNoServicesMessagePreference;
     private PreferenceScreen mCaptioningPreferenceScreen;
     private PreferenceScreen mDisplayMagnificationPreferenceScreen;
     private PreferenceScreen mGlobalGesturePreferenceScreen;
-
-    private int mLongPressTimeoutDefault;
+    private CheckBoxPreference mRecentPanelLeftyMode;
+    private ListPreference mRecentPanelScale;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -241,8 +246,16 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             String stringValue = (String) newValue;
             Settings.Secure.putInt(getContentResolver(),
                     Settings.Secure.LONG_PRESS_TIMEOUT, Integer.parseInt(stringValue));
-            mSelectLongPressTimeoutPreference.setSummary(
-                    mLongPressTimeoutValuetoTitleMap.get(stringValue));
+            return true;
+        } else if (preference == mRecentPanelScale) {
+            int value = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.RECENT_PANEL_SCALE_FACTOR, value);
+            return true;
+        } else if (preference == mRecentPanelLeftyMode) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.RECENT_PANEL_GRAVITY,
+                    ((Boolean) newValue) ? Gravity.LEFT : Gravity.RIGHT);
             return true;
         }
         return false;
@@ -353,19 +366,13 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
 
         // Long press timeout.
         mSelectLongPressTimeoutPreference =
-                (ListPreference) findPreference(SELECT_LONG_PRESS_TIMEOUT_PREFERENCE);
+                (SeekBarPreference) findPreference(SELECT_LONG_PRESS_TIMEOUT_PREFERENCE);
+        mSelectLongPressTimeoutPreference.setDefault(LONGPRESS_TIME_DEFAULT);
+        mSelectLongPressTimeoutPreference.isMilliseconds(true);
+        mSelectLongPressTimeoutPreference.setInterval(1);
+        mSelectLongPressTimeoutPreference.minimumValue(80);
+        mSelectLongPressTimeoutPreference.multiplyValue(20);
         mSelectLongPressTimeoutPreference.setOnPreferenceChangeListener(this);
-        if (mLongPressTimeoutValuetoTitleMap.size() == 0) {
-            String[] timeoutValues = getResources().getStringArray(
-                    R.array.long_press_timeout_selector_values);
-            mLongPressTimeoutDefault = Integer.parseInt(timeoutValues[0]);
-            String[] timeoutTitles = getResources().getStringArray(
-                    R.array.long_press_timeout_selector_titles);
-            final int timeoutValueCount = timeoutValues.length;
-            for (int i = 0; i < timeoutValueCount; i++) {
-                mLongPressTimeoutValuetoTitleMap.put(timeoutValues[i], timeoutTitles[i]);
-            }
-        }
 
         // Captioning.
         mCaptioningPreferenceScreen = (PreferenceScreen) findPreference(
@@ -387,6 +394,15 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             // nor long press power does not show global actions menu.
             mSystemsCategory.removePreference(mGlobalGesturePreferenceScreen);
         }
+
+        mRecentPanelLeftyMode =
+                (CheckBoxPreference) findPreference(RECENT_PANEL_LEFTY_MODE);
+        mRecentPanelLeftyMode.setOnPreferenceChangeListener(this);
+
+        mRecentPanelScale =
+                (ListPreference) findPreference(RECENT_PANEL_SCALE);
+        mRecentPanelScale.setOnPreferenceChangeListener(this);
+
     }
 
     private void updateAllPreferences() {
@@ -513,10 +529,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
 
         // Long press timeout.
         final int longPressTimeout = Settings.Secure.getInt(getContentResolver(),
-                Settings.Secure.LONG_PRESS_TIMEOUT, mLongPressTimeoutDefault);
-        String value = String.valueOf(longPressTimeout);
-        mSelectLongPressTimeoutPreference.setValue(value);
-        mSelectLongPressTimeoutPreference.setSummary(mLongPressTimeoutValuetoTitleMap.get(value));
+                Settings.Secure.LONG_PRESS_TIMEOUT, LONGPRESS_TIME_DEFAULT);
+        // Minimum 80 is 4 intervals of the 20 multiplier
+        mSelectLongPressTimeoutPreference.setInitValue((longPressTimeout / 20) - 4);
 
         // Captioning.
         final boolean captioningEnabled = Settings.Secure.getInt(getContentResolver(),
@@ -548,6 +563,15 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             mGlobalGesturePreferenceScreen.setSummary(
                     R.string.accessibility_global_gesture_preference_summary_off);
         }
+
+        final boolean recentLeftyMode = Settings.System.getInt(getContentResolver(),
+                Settings.System.RECENT_PANEL_GRAVITY, Gravity.RIGHT) == Gravity.LEFT;
+        mRecentPanelLeftyMode.setChecked(recentLeftyMode);
+
+        final int recentScale = Settings.System.getInt(getContentResolver(),
+                Settings.System.RECENT_PANEL_SCALE_FACTOR, 100);
+        mRecentPanelScale.setValue(recentScale + "");
+
     }
 
     private void updateLockScreenRotationCheckbox() {
