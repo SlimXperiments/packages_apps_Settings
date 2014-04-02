@@ -67,6 +67,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
     private static final String KEY_EQUIPMENT_ID = "fcc_equipment_id";
     private static final String PROPERTY_EQUIPMENT_ID = "ro.ril.fccid";
     private static final String KEY_SLIM_VERSION = "slim_version";
+    private static final String KEY_SLIMX_VERSION = "slimx_version";
     private static final String KEY_DEVICE_CPU = "device_cpu";
     private static final String KEY_DEVICE_MEMORY = "device_memory";
 
@@ -100,6 +101,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         findPreference(KEY_BUILD_NUMBER).setEnabled(true);
         findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
         setValueSummary(KEY_SLIM_VERSION, "ro.slim.version");
+        setValueSummary(KEY_SLIMX_VERSION, "ro.slimx.version");
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);

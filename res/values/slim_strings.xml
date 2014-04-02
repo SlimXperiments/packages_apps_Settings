@@ -52,6 +52,8 @@
     <!-- About phone screen, slim version -->
     <string name="slim_version_title">Slim version</string>
     <string name="slim_version_default">Unknown</string>
+    <string name="slimx_version_title">SlimX version</string>
+    <string name="slimx_version_default">Unknown</string>
 
     <!-- Display settings screen, notification light settings -->
     <string name="display_category_light_options_title">Light options</string>

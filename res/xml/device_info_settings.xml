@@ -143,6 +143,12 @@
                 android:title="@string/slim_version_title"
                 android:summary="@string/slim_version_default"/>
 
+        <!-- SlimX version -->
+        <Preference android:key="slimx_version"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/slimx_version_title"
+                android:summary="@string/slimx_version_default"/>           
+
         <!-- Detailed build version -->
         <Preference android:key="build_number"
                 style="?android:preferenceInformationStyle"
