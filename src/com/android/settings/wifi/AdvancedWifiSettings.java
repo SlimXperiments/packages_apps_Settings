@@ -58,12 +58,27 @@ public class AdvancedWifiSettings extends SettingsPreferenceFragment
 
     private ListPreference mCcodePref;
 
+    private IntentFilter mFilter;
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(WifiManager.LINK_CONFIGURATION_CHANGED_ACTION) ||
+                action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                refreshWifiInfo();
+            }
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.wifi_advanced_settings);
 
         mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        mFilter = new IntentFilter();
+        mFilter.addAction(WifiManager.LINK_CONFIGURATION_CHANGED_ACTION);
+        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
 
         mCcodePref = (ListPreference) findPreference(KEY_COUNTRY_CODE);
         mCcodePref.setOnPreferenceChangeListener(this);
