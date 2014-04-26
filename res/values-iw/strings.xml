@@ -1701,12 +1701,14 @@
     <string name="enable_opengl_traces_title" msgid="6790444011053219871">"הפעל מעקבי OpenGL"</string>
     <string name="debug_layout" msgid="5981361776594526155">"הצג את גבולות הפריסה"</string>
     <string name="debug_layout_summary" msgid="2001775315258637682">"הצג גבולות קליפ, שוליים וכו\'"</string>
-    <string name="show_cpu_usage" msgid="2389212910758076024">"הצג את השימוש ב-CPU"</string>
-    <string name="show_cpu_usage_summary" msgid="2113341923988958266">"שכבת על של מסך שמציגה את השימוש הנוכחי ב-CPU"</string>
-    <string name="force_hw_ui" msgid="6426383462520888732">"אלץ עיבוד ב-GPU"</string>
-    <string name="force_hw_ui_summary" msgid="5535991166074861515">"אכוף שימוש ב-GPU לשרטוט דו-מימדי"</string>
-    <string name="force_msaa" msgid="7920323238677284387">"אלץ הפעלת 4x MSAA"</string>
-    <string name="force_msaa_summary" msgid="9123553203895817537">"הפעל 4x MSAA ביישומי OpenGL ES 2.0"</string>
+    <string name="force_rtl_layout_all_locales" msgid="2259906643093138978">"אלץ כיוון פריסה משמאל לימין"</string>
+    <string name="force_rtl_layout_all_locales_summary" msgid="9192797796616132534">"אלץ כיוון פריסת מסך משמאל לימין"</string>
+    <string name="show_cpu_usage" msgid="2389212910758076024">"‏הצג את השימוש ב-CPU"</string>
+    <string name="show_cpu_usage_summary" msgid="2113341923988958266">"‏שכבת על של מסך שמציגה את השימוש הנוכחי ב-CPU"</string>
+    <string name="force_hw_ui" msgid="6426383462520888732">"‏אלץ עיבוד ב-GPU"</string>
+    <string name="force_hw_ui_summary" msgid="5535991166074861515">"‏אכוף שימוש ב-GPU לשרטוט דו-מימדי"</string>
+    <string name="force_msaa" msgid="7920323238677284387">"‏אלץ הפעלת 4x MSAA"</string>
+    <string name="force_msaa_summary" msgid="9123553203895817537">"‏הפעל 4x MSAA ביישומי OpenGL ES 2.0"</string>
     <string name="show_non_rect_clip" msgid="505954950474595172">"נקה באגים בפעולות באזור שאינו מלבני"</string>
     <string name="track_frame_time" msgid="6146354853663863443">"עיבוד פרופיל ב-GPU"</string>
     <string name="window_animation_scale_title" msgid="6162587588166114700">"קנה מידה להנפשה של חלון"</string>
