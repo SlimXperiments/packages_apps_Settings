@@ -233,15 +233,6 @@
     <string name="ime_switcher_notify">Notificación de método de entrada</string>
     <string name="ime_switcher_notify_summary">Muestra una notificación de selección de método de entrada</string>
 
-    <!-- Setting checkbox title for root access -->
-    <string name="root_access">Acceso Root</string>
-    <string name="root_access_warning_title">¿Permitir acceso root?</string>
-    <string name="root_access_warning_message">¡Permitir acceso root a las aplicaciones es muy peligroso y puede comprometer la seguridad de su sistema!</string>
-    <string name="root_access_none">Deshabilitado</string>
-    <string name="root_access_apps">Sólo aplicaciones</string>
-    <string name="root_access_adb">Sólo ADB</string>
-    <string name="root_access_all">Aplicaciones y ADB</string>
-
     <!-- Automatic brightness customization -->
     <string name="auto_brightness_setup_title">Brillo automático</string>
     <string name="auto_brightness_adjustment_title">Ajustes de brillo</string>

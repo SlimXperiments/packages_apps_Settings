@@ -222,15 +222,6 @@
     <string name="ime_switcher_notify">Výběr oznámení</string>
     <string name="ime_switcher_notify_summary">Zobrazit vstupní metody výběru oznámení</string>
 
-    <!-- Setting checkbox title for root access -->
-    <string name="root_access">Root přístup</string>
-    <string name="root_access_warning_title">Povolit root přístup?</string>
-    <string name="root_access_warning_message">Povolení aplikacím vyžadovat root přístup je velmi nebezpečené a může ohrozit bezpečnost Vašeho systému!</string>
-    <string name="root_access_none">Zakázáno</string>
-    <string name="root_access_apps">Pouze aplikace</string>
-    <string name="root_access_adb">Pouze ADB</string>
-    <string name="root_access_all">Aplikace a ADB</string>
-
     <!-- Automatic brightness customization -->
     <string name="auto_brightness_setup_title">Automatické podsvícení</string>
     <string name="auto_brightness_adjustment_title">Přizpůsobení podsvícení</string>

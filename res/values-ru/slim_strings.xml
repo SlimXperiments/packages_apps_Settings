@@ -343,13 +343,6 @@
     <string name="keyboard_rotation_dialog">Примечание: эта функция принудительно временно поворачивает экран при активации клавиатуры. Не дает эффекта при включенном автоповороте.</string>
     <string name="show_enter_key_title">Показывать клавишу \&quot;Ввод\&quot;</string>
     <string name="show_enter_key_summary">Принудительно показывать клавишу \&quot;Ввод\&quot; вместо клавиши со смайликами</string>
-    <string name="root_access">Root доступ</string>
-    <string name="root_access_warning_title">Разрешить root доступ?</string>
-    <string name="root_access_warning_message">Позволять приложениям получать root доступ может быть очень опасным и ставит под угрозу безопасность вашей системы!</string>
-    <string name="root_access_none">Выключен</string>
-    <string name="root_access_apps">Только приложения</string>
-    <string name="root_access_adb">Только ADB</string>
-    <string name="root_access_all">Приложения и ADB</string>
     <string name="media_scanner_on_boot_title">Поведение MediaScanner при загрузке</string>
     <string name="media_scanner_on_boot_enabled">Сканировать медиа</string>
     <string name="media_scanner_on_boot_ask">Спрашивать (уведомление)</string>
