@@ -16,6 +16,7 @@
 
 package com.android.settings.slim;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -36,6 +37,7 @@ public class AdvancedSettings extends SettingsPreferenceFragment
 
     private static final String PREF_MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
     private static final String PREF_DEVICESETTINGS_APP = "devicesettings_app";
+    private static final String PREF_SUPERSU_APP = "supersu_app";
 
     private PreferenceScreen mDeviceSettingsApp;
     private ListPreference mMsob;
@@ -45,6 +47,17 @@ public class AdvancedSettings extends SettingsPreferenceFragment
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.slim_advanced_settings);
+
+        boolean supersu_supported = false;
+        try {
+            supersu_supported = (getPackageManager().getPackageInfo(
+                                 "eu.chainfire.supersu", 0).versionCode >= 185);
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        if (!supersu_supported) {
+            PreferenceScreen mSuperSuApp = (PreferenceScreen) findPreference(PREF_SUPERSU_APP);
+            getPreferenceScreen().removePreference(mSuperSuApp);
+        }
 
         mMsob = (ListPreference) findPreference(PREF_MEDIA_SCANNER_ON_BOOT);
         mMsob.setValue(String.valueOf(Settings.System.getInt(getActivity().getContentResolver(),

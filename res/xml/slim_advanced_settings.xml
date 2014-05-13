@@ -19,9 +19,16 @@
     android:title="@string/advanced_options_settings_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <!-- SuperSU -->
     <PreferenceScreen
-        android:title="@string/superuser"
-        android:fragment="com.koushikdutta.superuser.PolicyNativeFragment" />
+        android:key="supersu_app"
+        android:icon="@drawable/ic_settings_supersu"
+        android:title="@string/supersu_title">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="eu.chainfire.supersu"
+            android:targetClass="eu.chainfire.supersu.MainActivity" />
+    </PreferenceScreen>
 
     <PreferenceCategory
         android:key="advanced_settings_options_prefs"
